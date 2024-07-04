@@ -3,12 +3,12 @@ body {
     padding: 0;
     display: flex;
     justify-content: center;
-    align-items: center;
-    height: 100vh;
+    align-items: flex-start; /* Alinha o conteúdo ao topo */
+    min-height: 100vh;
     background-color: black;
     color: white;
     font-family: Arial, sans-serif;
-    overflow: hidden;
+    overflow-y: auto; /* Permite rolagem vertical */
     position: relative;
 }
 
@@ -36,7 +36,7 @@ body {
     height: 20px;
     border-radius: 50%;
     animation: blink 1s infinite;
-    z-index: 1; /* Ajuste o z-index conforme necessário */
+    z-index: 1;
 }
 
 @keyframes blink {
@@ -48,6 +48,7 @@ body {
 .container {
     text-align: center;
     z-index: 1;
+    padding: 20px;
 }
 
 .hidden {
@@ -113,7 +114,26 @@ body {
 }
 
 #noButton {
-  padding: 10px 20px;
-  font-size: 18px;
-  margin: 10px;
+    padding: 10px 20px;
+    font-size: 18px;
+    margin: 10px;
+}
+
+#topImage {
+    margin-bottom: 10px;
+}
+
+#dancingImage {
+    width: 100px;
+    height: auto;
+    animation: danceAround 1s infinite;
+    margin: 20px auto;
+}
+
+@keyframes danceAround {
+    0% { transform: translate(0, 0); }
+    25% { transform: translate(20px, 20px); }
+    50% { transform: translate(0, 40px); }
+    75% { transform: translate(-20px, 20px); }
+    100% { transform: translate(0, 0); }
 }

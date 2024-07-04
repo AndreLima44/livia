@@ -1,3 +1,12 @@
+let attemptCount = 0; // Inicializa a contagem de tentativas
+const errorSound = new Audio('errorSound.mp3');
+const moveSound = new Audio('moveSound.mp3');
+
+function playSound(sound) {
+    sound.currentTime = 0; // Reinicia o som
+    sound.play();
+}
+
 document.getElementById('submitButton').addEventListener('click', function() {
     const name = document.getElementById('nameInput').value;
     const date = document.getElementById('dateInput').value;
@@ -15,28 +24,32 @@ document.getElementById('submitButton').addEventListener('click', function() {
     const noButton = document.getElementById('noButton');
     const finalMessageContainer = document.getElementById('finalMessageContainer');
     const surpriseVideo = document.getElementById('surpriseVideo');
+    const hintMessage = document.getElementById('hintMessage');
+    const dancingImage = document.getElementById('dancingImage');
 
-    if (name !== 'Livia') {
-        alert('TENTA DE NOVO NUM É ESSE NOME');
-        return;
-    }
-
-    if (date !== '2024-07-04') {
-        alert('TENTA DINOVO NUM É ESSA DATA NAO');
+    if (name !== 'Livia' || date !== '2024-07-04') {
+        attemptCount++;
+        playSound(errorSound); // Usa a função para tocar o som de erro
+        if (attemptCount >= 3) {
+            hintMessage.classList.remove('hidden');
+        }
+        alert('TENTA DE NOVO, NÃO É ESSE NOME OU DATA');
         return;
     }
 
     document.getElementById('inputContainer').classList.add('hidden');
     messageContainer.classList.remove('hidden');
-    message.textContent = 'AH! ENTÃO HOJE É... O SEU ANIVERSARIO, MININA!';
+    message.textContent = 'AH! ENTÃO HOJE É... O SEU ANIVERSÁRIO, MININA!';
+
+    dancingImage.classList.remove('hidden');
 
     setTimeout(function() {
         birthdayContent.classList.remove('hidden');
         birthdaySong.play();
-        message.textContent = 'PARABÉNS, LIVIA!!!';
+        message.textContent = 'PARABÉNS, LÍVIA!!!';
 
-        const leftImageSources = ['image1.png', 'image2.png']; // Substitua com os nomes das suas imagens
-        const rightImageSources = ['image3.png', 'image4.png']; // Substitua com os nomes das suas imagens
+        const leftImageSources = ['image1.png', 'image2.png', 'image5.png', 'image6.png']; // Substitua com os nomes das suas imagens
+        const rightImageSources = ['image3.png', 'image4.png', 'image7.png', 'image8.png', 'image9.png']; // Substitua com os nomes das suas imagens
 
         leftImageSources.forEach(src => {
             const img = document.createElement('img');
@@ -71,6 +84,7 @@ document.getElementById('submitButton').addEventListener('click', function() {
 
     noButton.addEventListener('mouseover', function() {
         moveButton(noButton);
+        playSound(moveSound); // Usa a função para tocar o som de movimento
     });
 });
 
@@ -104,10 +118,16 @@ function moveButton(button) {
     button.style.position = 'absolute';
     button.style.top = `${newTop}px`;
     button.style.left = `${newLeft}px`;
+
+    // Reproduz o som de movimento
+    playSound(moveSound);
 }
 
 const noButton = document.getElementById('noButton');
 
 noButton.addEventListener('mouseover', function() {
     moveButton(noButton);
+    playSound(moveSound); // Usa a função para tocar o som de movimento
 });
+
+
